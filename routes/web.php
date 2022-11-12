@@ -17,3 +17,6 @@ use App\Http\Controllers\Api\ScannerController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/filebrowser', [ScannerController::class, 'show']);
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Facade\FlareClient\Http\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
@@ -89,8 +90,8 @@ class ScannerController extends Controller
         }
 
         $response = scan($root);
-
-        return $response;
+        // return $response;
+        return view('filebrowser', compact('response'));
 
     }
 }
