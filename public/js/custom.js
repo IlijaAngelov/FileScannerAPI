@@ -1,7 +1,6 @@
 function toggle(event) {
-
-    let el = event.nextElementSibling;
-    el.classList.toggle("hide");
-
-
+    document.querySelectorAll('.sub')
+    .forEach(function(event) {
+        event.classList.toggle("hide");
+    })
 }

@@ -33,7 +33,7 @@
 
                     <div class="folder-directory" style="display: flex; margin-left: 20px;" onclick="toggle(this)">
                         <div>
-                                <img src="{{ asset('image/285658_blue_folder_icon.png') }}" alt="folder_image" title="folder_image" width="100px" height="100px">
+                            <img src="{{ asset('image/285658_blue_folder_icon.png') }}" alt="folder_image" title="folder_image" width="100px" height="100px">
                         </div>
                         <div style="align-items: center; margin-left: 20px;">
                             <p>{{ $folder['name'] }}</p>
