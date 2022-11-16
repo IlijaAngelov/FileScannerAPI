@@ -31,8 +31,8 @@
             <input type="text" placeholder="Search Files">
         </div>
     </main>
-    {{-- <hr style="margin-bottom: 10px;"> --}}
-    {{ $filebrowser }}
+    {{-- {{ $filebrowser }} --}}
+    @each('partials.project', $response, 'project')
 
 
 </body>

@@ -1,3 +1,15 @@
 .hide {
     display: none;
 }
+
+.sub {
+    margin-left: 20px;
+}
+
+.file-directory {
+    display: flex;
+}
+
+.folder-directory {
+    display: flex;
+}
