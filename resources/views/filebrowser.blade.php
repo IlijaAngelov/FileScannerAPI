@@ -8,31 +8,35 @@
     <link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}">
     <title>File Scanner</title>
 </head>
-<body style="width: 80%; margin-left: auto; margin-right: auto; text-align:center; background-color: #dadada;">
+<body>
     @include('_filebrowser-header')
-    <main class="container" style="background-color: white; padding: 20px 0;">
-        <div>
+    <main class="container">
+        <div class="load_settings">
             <p>Load Saved: <input type="checkbox"></p>
-            <p>auto load froms saved settings</p>
+            <p><small>auto load froms saved settings</small></p>
         </div>
-        <div>
-            <label for="older_than">
-                <p>Older Than:</p>
-                <input type="date" id="older_than" name="older_than">
-            </label>
+        <div class="time_settings">
+            <div>
+                <label for="older_than">
+                    <p>Older Than:</p>
+                    <input type="date" id="older_than" name="older_than">
+                </label>
+            </div>
+            <div>
+                <label for="younger_than">
+                    <p>Younger Than:</p>
+                    <input type="date" id="younger_than" name="younger_than">
+                </label>
+            </div>
         </div>
-        <div>
-            <label for="younger_than">
-                <p>Younger Than:</p>
-                <input type="date" id="younger_than" name="younger_than">
-            </label>
-        </div>
-        <div>
+        <div class="search_bar">
             <input type="text" placeholder="Search Files">
         </div>
-    </main>
 
     @each('partials.project', $response, 'project')
+
+    </main>
+
 
 </body>
 </html>
