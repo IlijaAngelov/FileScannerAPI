@@ -19,8 +19,8 @@ class ScannerController extends Controller
     public function show($path = '')
     {
 
-        // $root = realpath(".");
-        $root = realpath("/home/ilija/Documents/Books/");
+        $root = realpath(".");
+        // $root = realpath("/home/ilija/Documents/Books/");
 
         /**
          * Get the directory size
