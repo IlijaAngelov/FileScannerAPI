@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Facade\FlareClient\Http\Client;
 use App\Http\Controllers\Controller;
@@ -12,15 +13,25 @@ class ScannerController extends Controller
 
     public function index()
     {
-        return view('display');
+        $response = Http::get('http://127.0.0.1:8000/api/display?folder=/home/ilija/Documents/Books');
+        return view('filebrowser', compact('response'));
     }
 
-
-    public function show($path = '')
+    public function show(Request $request)
     {
-
-        $root = realpath(".");
-        // $root = realpath("/home/ilija/Documents/Books/");
+        $path = $request['folder'];
+        if($path[0] != '/'){
+            $path = '/' . $path;
+        };
+        $depth_search = 1;
+        if($request['depth_search'] == 0){
+            $depth_search = 0;
+        } else {
+            $depth_search = 1;
+        }
+        $cut_date = $request['cut_date'] != '' ? $request['cut_date'] : '';
+        $cut_date_end = $request['cut_date_end'] != '' ? $request['cut_date_end'] : '';
+        $root = realpath($path);
 
         /**
          * Get the directory size
@@ -35,11 +46,9 @@ class ScannerController extends Controller
             return $size;
         }
 
-        function scan($root) {
-
-            $last_letter  = $root[strlen($root)-1];
-            $root  = ($last_letter == '\\' || $last_letter == '/') ? $root : $root.DIRECTORY_SEPARATOR;
-
+        function scan($root, $depth_search, $cut_date, $cut_date_end) {
+            $last_character  = $root[strlen($root)-1];
+            $root  = ($last_character == '\\' || $last_character == '/') ? $root : $root.DIRECTORY_SEPARATOR;
             $scanDir = scandir($root);
             $childrenFolders = array();
             $childrenFiles = array();
@@ -55,43 +64,48 @@ class ScannerController extends Controller
             foreach($scanDir as $key => $value) {
                 $path = $root . $value;
                 $ext = pathinfo($path, PATHINFO_EXTENSION);
-
-                $currentDir = [
-                    "name" => $value,
-                    "type" => filetype($path),
-                    "data" => [
+                $last_modified = date ("Y-m-d", filemtime($path));
+                // if(($cut_date_end < $last_modified) && ($cut_date > $last_modified)) {
+                    $currentDir = [
+                        "name" => $value,
                         "type" => filetype($path),
-                        "file" => $value,
-                        "file_ext" => $ext,
-                        "basename_file" => $value,
-                        "last_modified_t" => filemtime($path),
-                        "last_modified" => date("F d Y H:i:s.", filemtime($path)),
-                        "cut_date" => "Thu, January 1st, 1970 - 12:00am",
-                        "cut_date_end" => "Thu, January 1st, 1970 - 12:00am",
-                        "return_direction" => "older"
-                        ],
-                    "subs" => null
-                    ];
-                if (is_dir($path)) {
-                    $currentDir["data"]["get_directory_size"] = getDirSize($path);
-                    $count_dir_files = count(scandir($path)) - 2;
-                    $childrenFolders = scan($path);
-                    $currentDir['data']['file_ext'] = "dir";
-                    $currentDir['subs'] = $childrenFolders;
-                    $currentDir["data"]["count_dir_files"] = $count_dir_files;
-                } else {
-                    $currentDir["data"]["full_url"] = $path;
-                    // $currentDir["data"]["is_image"] = getimagesize($path) ? true : false;
-                    $currentDir["data"]["file_size"] = filesize($path);
-                }
-                $mainDir[] = $currentDir;
+                        "data" => [
+                            "type" => filetype($path),
+                            "file" => $value,
+                            "file_ext" => $ext,
+                            "basename_file" => $value,
+                            "last_modified_t" => $last_modified,
+                            "last_modified" => date("F d Y H:i:s.", filemtime($path)),
+                            "cut_date" => "Thu, January 1st, 1970 - 12:00am",
+                            "cut_date_end" => "Thu, January 1st, 1970 - 12:00am",
+                            "return_direction" => "older"
+                            ],
+                        "subs" => null
+                        ];
+                    if (is_dir($path)) {
+                        $currentDir["data"]["get_directory_size"] = getDirSize($path);
+                        $count_dir_files = count(scandir($path)) - 2;
+                        if($depth_search == 1){
+                            $childrenFolders = scan($path, $depth_search, $cut_date, $cut_date_end);
+                        }
+                        $currentDir['data']['file_ext'] = "dir";
+                        $currentDir['subs'] = $childrenFolders;
+                        $currentDir["data"]["count_dir_files"] = $count_dir_files;
+                    } else {
+                        $currentDir["data"]["full_url"] = $path;
+                        $currentDir["data"]["file_size"] = filesize($path);
+                    }
+
+                    if($currentDir["data"]["last_modified_t"] < $cut_date && ($cut_date > $currentDir["data"]["last_modified_t"])) {
+                        $mainDir[] = $currentDir;
+                    }
             }
             return $mainDir;
         }
 
-        $response = scan($root);
-        // return $response;
-        return view('filebrowser', compact('response'));
+        $response = scan($root, $depth_search, $cut_date, $cut_date_end);
+        return $response;
+        // return view('filebrowser', compact('response'));
 
     }
 }

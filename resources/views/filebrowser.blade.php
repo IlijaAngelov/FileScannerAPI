@@ -32,7 +32,6 @@
         <div class="search_bar">
             <input type="text" placeholder="Search Files">
         </div>
-
     @each('partials.project', $response, 'project')
 
     </main>

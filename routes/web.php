@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/filebrowser', [ScannerController::class, 'show']);
+Route::get('/filebrowser', [ScannerController::class, 'index']);
 
