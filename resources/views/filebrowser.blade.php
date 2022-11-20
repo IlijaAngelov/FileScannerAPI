@@ -32,10 +32,12 @@
         <div class="search_bar">
             <input type="text" placeholder="Search Files">
         </div>
-    @each('partials.project', $response, 'project')
+
+    @php
+        $array = json_decode(json_encode($response->getData()), true);
+    @endphp
+    @each('partials.project', $array, 'project')
 
     </main>
-
-
 </body>
 </html>

@@ -1,5 +1,5 @@
 <div class="block">
-    @if ($project['type'] == 'file')
+    @if($project['type'] == 'file')
         <div class="file-directory">
             <img src="{{ asset('image/file-1453.png') }}" alt="file_image" title="file_image" width="50px" height="50px">
         </div>
@@ -9,7 +9,7 @@
         </div>
     @endif
     <div class="directory-info">
-            <p class="directory_name">{{ $project['name'] }}</p>
+        <p class="directory_name">{{ $project['name'] }}</p>
         @foreach ($project['data'] as $key => $value)
             @if ($project['type'] == 'file')
                 @if ($key == "file_size")

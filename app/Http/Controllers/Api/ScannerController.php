@@ -11,26 +11,29 @@ use Illuminate\Support\Facades\Http;
 class ScannerController extends Controller
 {
 
-    public function index()
+
+    public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8000/api/display?folder=/home/ilija/Documents/Books');
+        $folder =  $request->folder;
+        $depth_search = $request->depth_search;
+        $cut_date = $request->cut_date;
+        $cut_date_end = $request->cut_date_end;
+
+        $response = $this->show($folder, $depth_search, $cut_date, $cut_date_end);
         return view('filebrowser', compact('response'));
     }
 
-    public function show(Request $request)
+    public function show($folder = '', $depth_search = '', $cut_date = '', $cut_date_end = '')
     {
-        $path = $request['folder'];
+        $path = $folder;
         if($path[0] != '/'){
             $path = '/' . $path;
         };
-        $depth_search = 1;
-        if($request['depth_search'] == 0){
-            $depth_search = 0;
-        } else {
+        if($depth_search == 1 || $depth_search == null){
             $depth_search = 1;
+        } else {
+            $depth_search = 0;
         }
-        $cut_date = $request['cut_date'] != '' ? $request['cut_date'] : '';
-        $cut_date_end = $request['cut_date_end'] != '' ? $request['cut_date_end'] : '';
         $root = realpath($path);
 
         /**
@@ -47,7 +50,7 @@ class ScannerController extends Controller
         }
 
         function scan($root, $depth_search, $cut_date, $cut_date_end) {
-            $last_character  = $root[strlen($root)-1];
+            $last_character = htmlspecialchars($root[strlen($root)-1]);
             $root  = ($last_character == '\\' || $last_character == '/') ? $root : $root.DIRECTORY_SEPARATOR;
             $scanDir = scandir($root);
             $childrenFolders = array();
@@ -65,7 +68,6 @@ class ScannerController extends Controller
                 $path = $root . $value;
                 $ext = pathinfo($path, PATHINFO_EXTENSION);
                 $last_modified = date ("Y-m-d", filemtime($path));
-                // if(($cut_date_end < $last_modified) && ($cut_date > $last_modified)) {
                     $currentDir = [
                         "name" => $value,
                         "type" => filetype($path),
@@ -96,16 +98,19 @@ class ScannerController extends Controller
                         $currentDir["data"]["file_size"] = filesize($path);
                     }
 
-                    if($currentDir["data"]["last_modified_t"] < $cut_date && ($cut_date > $currentDir["data"]["last_modified_t"])) {
-                        $mainDir[] = $currentDir;
-                    }
+                    // if($currentDir["data"]["last_modified_t"] < $cut_date && ($cut_date > $currentDir["data"]["last_modified_t"])) {
+                    //     $mainDir[] = $currentDir;
+                    // }
+                    // $mainDir[] = $currentDir;
+                // }
+                $mainDir[] = $currentDir;
+
             }
             return $mainDir;
         }
 
         $response = scan($root, $depth_search, $cut_date, $cut_date_end);
-        return $response;
-        // return view('filebrowser', compact('response'));
+        return response()->json($response);
 
     }
 }
