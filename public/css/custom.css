@@ -42,7 +42,6 @@ header > a {
     justify-content: space-around;
     width: 90%;
     height: 80px;
-    /* margin: 20px; */
     padding: 0.8em;
 }
 
@@ -67,14 +66,6 @@ header > a {
     margin-left: 20px;
 }
 
-.file-directory {
-    display: flex;
-}
-
-.folder-directory {
-    display: flex;
-}
-
 .block {
     display: flex;
     min-height: 50px;
@@ -89,6 +80,7 @@ header > a {
 
 .file-directory,
 .folder-directory {
+    display: flex;
     flex-direction: column;
     height: 5em;
     margin: 1.5em;
@@ -99,6 +91,7 @@ p {
 }
 
 .directory_name {
+    word-break: break-word;
     font-size: 1.2em;
     padding-bottom: 10px;
 }

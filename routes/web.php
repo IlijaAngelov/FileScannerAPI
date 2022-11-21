@@ -20,3 +20,4 @@ Route::get('/', function () {
 
 Route::get('/filebrowser', [ScannerController::class, 'index']);
 
+// add footer, fix date search, add search bar...
