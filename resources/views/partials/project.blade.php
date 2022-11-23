@@ -1,4 +1,5 @@
 <div class="block">
+    {{-- @dd($project) --}}
     @if($project['type'] == 'file')
         <div class="file-directory">
             <img src="{{ asset('image/file-1453.png') }}" alt="file_image" title="file_image" width="50px" height="50px">
@@ -28,6 +29,10 @@
             @endif
         @endforeach
     </div>
+    @if($project['type'] == 'file')
+            <div class="copy_value"><a href="#!" class="btn" data-value="{{ $project['data']['full_url'] }}" onclick="copyContent(this)">Copy</a></div>
+            <div class="show_image"><a href="file://{{ $project['data']['full_url'] }}">Show Image</a></div>
+    @endif
 </div>
 
 @if ($project['subs'] != null)

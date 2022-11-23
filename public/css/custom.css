@@ -74,8 +74,10 @@ header > a {
     padding: 20px;
     border-top: solid 1px #ECE9E9;
 }
+
 .block:hover {
-    background-color: greyscale(100%);
+    background-color: #f3f3f3;
+    border: 1px solid transparent grey;
 }
 
 .file-directory,
@@ -94,4 +96,23 @@ p {
     word-break: break-word;
     font-size: 1.2em;
     padding-bottom: 10px;
+}
+
+.copy_value {
+    min-width: 80px;
+    margin: auto;
+    text-align: center;
+}
+
+.show_image {
+    min-width: 80px;
+    margin: auto;
+    text-align: center;
+}
+
+.copy_value a {
+    display: block;
+    height: 100%;
+    color: #399ae5;
+    text-decoration: none;
 }
