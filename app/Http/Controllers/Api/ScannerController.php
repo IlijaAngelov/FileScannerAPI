@@ -26,9 +26,6 @@ class ScannerController extends Controller
     public function show($folder = '', $depth_search = '', $cut_date = '', $cut_date_end = '')
     {
         $path = $folder;
-        if($path[0] != '/'){
-            $path = '/' . $path;
-        };
         if($depth_search == 1 || $depth_search == null){
             $depth_search = 1;
         } else {
