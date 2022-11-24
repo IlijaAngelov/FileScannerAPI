@@ -95,13 +95,22 @@ class ScannerController extends Controller
                         $currentDir["data"]["file_size"] = filesize($path);
                     }
 
-                    // if($currentDir["data"]["last_modified_t"] < $cut_date && ($cut_date > $currentDir["data"]["last_modified_t"])) {
-                    //     $mainDir[] = $currentDir;
-                    // }
-                    // $mainDir[] = $currentDir;
-                // }
-                $mainDir[] = $currentDir;
-
+                    if((empty($cut_date) && $cut_date == null) && (empty($cut_date_end) && $cut_date_end == null)){
+                        $mainDir[] = $currentDir;
+                    } elseif($cut_date < $cut_date_end) {
+                        $mainDir[] = $currentDir;
+                    } else {
+                        if(!empty($cut_date) && $cut_date != null){
+                            if(strtotime($last_modified) > strtotime($cut_date)) {
+                                $mainDir[] = $currentDir;
+                            }
+                        }
+                        if(!empty($cut_date_end) && $cut_date_end != null){
+                            if(strtotime($last_modified) < strtotime($cut_date_end)) {
+                                $mainDir[] = $currentDir;
+                            }
+                        }
+                    }
             }
             return $mainDir;
         }
