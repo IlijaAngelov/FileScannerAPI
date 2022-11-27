@@ -14,13 +14,15 @@ Complete REST API in Laravel 8 for scanning Folder Directories.
 
 5. Copy the `.env.example` file and rename it to `.env`
 
-6. Enter values for `PAU` (php auth user) and `PAP` (php auth password) for testing purposes for custom user.
+6. Configure the Database - variables starting with `DB`
 
 7. Run `composer install`
 
 8. Run `php artisan key:generate`
 
-9. Run `php artisan serve`
+9. Run `php artisan migrate`
+
+10. Run `php artisan serve`
 
 Note: Make Sure Laravel backend Project Run In Background 
 (Entry point: http://127.0.0.1:8000/ )
