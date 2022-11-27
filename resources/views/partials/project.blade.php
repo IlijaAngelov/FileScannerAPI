@@ -1,5 +1,4 @@
 <div class="block">
-    {{-- @dd($project) --}}
     @if($project['type'] == 'file')
         <div class="file-directory">
             <img src="{{ asset('image/file-1453.png') }}" alt="file_image" title="file_image" width="50px" height="50px">

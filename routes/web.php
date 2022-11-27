@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/filebrowser', [ScannerController::class, 'index']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-// add footer, fix date search, add search bar...
+require __DIR__.'/auth.php';
+
+Route::get('/filebrowser', [ScannerController::class, 'index'])->middleware('auth.basic');
