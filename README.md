@@ -2,7 +2,7 @@ Complete REST API in Laravel 8 for scanning Folder Directories.
 
 # How to use
 
-## Prerequisite - PHP 8
+## Prerequisite - PHP version (7.3 - 8.1)
 
 1. Clone the repository into your working environment
 
