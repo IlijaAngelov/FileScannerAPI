@@ -39,5 +39,6 @@
     @each('partials.project', $array, 'project')
 
     </main>
+    @include('_filebrowser-footer')
 </body>
 </html>

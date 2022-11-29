@@ -23,6 +23,11 @@ header > a {
     margin: 10px;
 }
 
+a {
+    color: #399ae5;
+    text-decoration: none;
+}
+
 .container {
     display: flex;
     width: 60%;
@@ -113,6 +118,20 @@ p {
 .copy_value a {
     display: block;
     height: 100%;
-    color: #399ae5;
-    text-decoration: none;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    max-width: 100%;
+    width: 60%;
+    height: 5vh;
+    background-color: white;
+    margin: 20px auto;
+}
+
+footer > div {
+    display: flex;
+    align-items: center;
 }
