@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Http;
 class ScannerController extends Controller
 {
 
-
-    public function index(Request $request)
+    public function store(Request $request)
     {
         $folder =  $request->folder;
         $depth_search = $request->depth_search;
@@ -23,7 +22,7 @@ class ScannerController extends Controller
         return view('filebrowser', compact('response'));
     }
 
-    public function show($folder = '', $depth_search = '', $cut_date = '', $cut_date_end = '')
+    public function show($folder, $depth_search, $cut_date, $cut_date_end)
     {
         $path = $folder;
         if($depth_search == 1 || $depth_search == null){

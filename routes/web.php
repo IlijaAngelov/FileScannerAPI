@@ -14,14 +14,14 @@ use App\Http\Controllers\Api\ScannerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
-Route::get('/filebrowser', [ScannerController::class, 'index'])->middleware('auth.basic');
+Route::get('/', function () {
+    return view('index');
+});
+
+Route::post('/filebrowser', [ScannerController::class, 'store'])->middleware('auth.basic');
