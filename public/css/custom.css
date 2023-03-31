@@ -50,6 +50,18 @@ a {
     flex-direction: column;
 }
 
+.parameters_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+}
+
+form > div {
+    margin: 1vh;
+    line-height: 2em;
+}
+
 .load_settings {
     height: 50px;
     margin: 5px 15px;
@@ -141,5 +153,9 @@ footer {
     height: 5vh;
     background-color: white;
     margin: 20px auto;
+}
+
+label {
+    display: block;
 }
 

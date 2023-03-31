@@ -13,36 +13,38 @@
 <body>
     @include('_filebrowser-header')
     <main class="container">
-        <form method="POST" action="/filebrowser" enctype="multipart/form-data">
-            @csrf
+        <div class="parameters_form">
+            <form method="POST" action="/filebrowser" enctype="multipart/form-data">
+                @csrf
 
-            <div>
-                <label for="folder">Choose a folder path:
-                    <input id="folder" name="folder" type="text" placeholder="/Downloads" pattern="^\/.{1,128}" title="Directory Path should start with /" required>
-                </label>
-            </div>
+                <div>
+                    <label for="folder">Choose a folder path:</label>
+                    <input id="folder" name="folder" type="text" placeholder="/Downloads" pattern="^\/.{1,128}"
+                        title="Directory Path should start with /" required>
+                </div>
 
-            <div>
-                <label for="cut_date">Date Start:
+                <div>
+                    <label for="cut_date">Date Start:</label>
                     <input id="cut_date" name="cut_date" type="date">
-                </label>
-            </div>
+                </div>
 
-            <div>
-                <label for="cut_date_end">Date End:
+                <div>
+                    <label for="cut_date_end">Date End:</label>
                     <input id="cut_date_end" name="cut_date_end" type="date">
-                </label>
-            </div>
+                </div>
 
-            <div><label for="depth_search">Load Saved</label>
-                <input type="checkbox" name="depth_search">
-            </div>
+                <div>
+                    <label for="depth_search">Search Recursively?
+                        <input type="checkbox" name="depth_search">
+                    </label>
+                </div>
 
-            <div>
-                <button type="submit">Scan</button>
-            </div>
+                <div>
+                    <button type="submit">Scan</button>
+                </div>
 
-        </form>
+            </form>
+        </div>
     </main>
     @include('_filebrowser-footer')
 </body>
