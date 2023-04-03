@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/display', [ScannerController::class, 'show'])->middleware('auth.basic');
+Route::post('/display', [ScannerController::class, 'display'])->middleware('auth.basic');

@@ -19,7 +19,20 @@ class ScannerController extends Controller
         $cut_date_end = $request->cut_date_end;
 
         $response = $this->show($folder, $depth_search, $cut_date, $cut_date_end);
+
         return view('filebrowser', compact('response'));
+    }
+
+    public function display(Request $request)
+    {
+        $folder =  $request->folder;
+        $depth_search = $request->depth_search;
+        $cut_date = $request->cut_date;
+        $cut_date_end = $request->cut_date_end;
+
+        $response = $this->show($folder, $depth_search, $cut_date, $cut_date_end);
+
+        return response()->json($response);
     }
 
     public function show($folder, $depth_search, $cut_date, $cut_date_end)
@@ -82,13 +95,11 @@ class ScannerController extends Controller
                         ];
                     if (is_dir($path)) {
                         $currentDir["data"]["get_directory_size"] = getDirSize($path);
-                        $count_dir_files = count(scandir($path)) - 2;
                         if($depth_search == 1){
                             $childrenFolders = scan($path, $depth_search, $cut_date, $cut_date_end);
                         }
                         $currentDir['data']['file_ext'] = "dir";
                         $currentDir['subs'] = $childrenFolders;
-                        $currentDir["data"]["count_dir_files"] = $count_dir_files;
                     } else {
                         $currentDir["data"]["full_url"] = $path;
                         $currentDir["data"]["file_size"] = filesize($path);
