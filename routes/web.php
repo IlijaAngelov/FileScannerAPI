@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ScannerController;
+use App\Http\Controllers\Api\DirectoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+// First version of the API
 Route::post('/filebrowser', [ScannerController::class, 'store'])->middleware('auth.basic');
+
+// Second version with SPLFileInfo fn / Data Display needs to be changed!
+Route::post('/filebrowser', [DirectoryController::class, 'iterate']);
