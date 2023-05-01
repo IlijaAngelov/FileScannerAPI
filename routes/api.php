@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ScannerController;
+use App\Http\Controllers\Api\DirectoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/display', [ScannerController::class, 'display'])->middleware('auth.basic');
+// this returns a flatten array -- older version
+Route::get('/display', [ScannerController::class, 'display'])->middleware('auth.basic');
+
+// this returns a flatten array
+Route::get('/iterate', [DirectoryController::class, 'iterate']);
